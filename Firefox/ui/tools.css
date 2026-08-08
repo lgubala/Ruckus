@@ -1,0 +1,36 @@
+/* Ruckus — tool chrome: the area snip overlay and anything else a
+   tool puts on screen. */
+
+/* ---------- area snip ---------- */
+
+.snip-mask {
+  position: fixed;
+  inset: 0;
+  pointer-events: auto;
+  cursor: crosshair;
+  background: rgba(23, 18, 42, 0.42);
+}
+.snip-box {
+  position: absolute;
+  display: none;
+  border: 2px dashed var(--rk-mint);
+  background: rgba(111, 242, 184, 0.12);
+  box-shadow: 0 0 0 9999px rgba(23, 18, 42, 0.28);
+}
+.snip-box.live { display: block; }
+.snip-hint {
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  background: var(--rk-shell);
+  color: var(--rk-paper);
+  border: 2px solid var(--rk-ink);
+  box-shadow: 3px 3px 0 var(--rk-ink);
+  padding: 5px 10px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+/* Hide the whole overlay while a screenshot is being taken. */
+.layer.invisible { visibility: hidden; }

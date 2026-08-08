@@ -1,0 +1,110 @@
+{
+  "manifest_version": 3,
+  "name": "Ruckus",
+  "version": "1.0.0",
+  "description": "Your browser's mischievous sidekick. A prettier Ctrl+F, offline PDF and Word tools, and a creature that misbehaves.",
+  "author": "Ruckus contributors",
+  "homepage_url": "https://github.com/yourname/ruckus",
+  "permissions": [
+    "storage",
+    "alarms",
+    "tabs",
+    "contextMenus",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "core/config.js",
+        "core/lines.js",
+        "core/sprites.js",
+        "content/registry.js",
+        "content/particles.js",
+        "content/props.js",
+        "content/activity.js",
+        "content/pet.js",
+        "content/search.js",
+        "content/mischief/kit.js",
+        "content/mischief/tilt.js",
+        "content/mischief/flip.js",
+        "content/mischief/topple.js",
+        "content/mischief/scramble.js",
+        "content/mischief/pinch_word.js",
+        "content/mischief/pinch_image.js",
+        "content/mischief/wheelbarrow.js",
+        "content/mischief/roadworks.js",
+        "content/mischief/shelfdrop.js",
+        "content/mischief/lamp.js",
+        "content/mischief/robbery.js",
+        "content/mischief.js",
+        "content/tools.js",
+        "content/treats.js",
+        "content/sound.js",
+        "content/chatter.js",
+        "content/quirks/basics.js",
+        "content/quirks/page.js",
+        "content/quirks/play.js",
+        "content/quirks/critter.js",
+        "content/brain.js",
+        "content/main.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Ruckus",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "toggle-search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "Send Ruckus sniffing for text on this page"
+    },
+    "toggle-pet": {
+      "suggested_key": {
+        "default": "Alt+Shift+P",
+        "mac": "Alt+Shift+P"
+      },
+      "description": "Show or hide Ruckus"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ui/*",
+        "sounds/*",
+        "icons/*",
+        "vendor/*",
+        "tools/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

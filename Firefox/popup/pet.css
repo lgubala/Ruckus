@@ -1,0 +1,158 @@
+/* Ruckus — the Pet tab. This side is a toy: a glowing handheld screen,
+   chunky pressable keys, hard shadows, warm mint. */
+
+/* ---------- the screen ---------- */
+
+.lcd {
+  position: relative;
+  background: var(--glass);
+  border: 3px solid #061713;
+  box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.55);
+  padding: 12px 10px 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+/* scanlines */
+.lcd-grain {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+
+/* a soft pool of light behind the pet */
+.lcd-glow {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 190px;
+  height: 130px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(111, 242, 184, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+#stage {
+  image-rendering: pixelated;
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+
+.nameplate { display: flex; align-items: center; gap: 5px; position: relative; }
+
+.petname {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+  text-shadow: 0 0 12px rgba(111, 242, 184, 0.35);
+}
+
+
+.status {
+  font-size: 10px; color: var(--mint-dim); text-align: center;
+  min-height: 1.2em; position: relative;
+}
+
+/* ---------- gauges ---------- */
+
+.gauges { display: flex; flex-direction: column; gap: 5px; }
+
+.gauge {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.cells { display: flex; gap: 2px; }
+
+.cell {
+  flex: 1 1 auto;
+  height: 10px;
+  background: #1a1329;
+  border: 1px solid var(--ink);
+  transition: background 200ms steps(3);
+}
+.cell.on { background: var(--mint); }
+.cell.warn { background: var(--signal); }
+.cell.bad { background: #ff7a8a; }
+
+/* ---------- xp ---------- */
+
+.xp { display: flex; flex-direction: column; gap: 4px; }
+.xp-head {
+  display: flex; justify-content: space-between;
+  font-size: 9px; letter-spacing: 0.08em; color: var(--mint-dim);
+}
+.xp-head span:first-child { color: var(--paper); letter-spacing: 0.14em; }
+.xp-track { height: 6px; background: #1a1329; border: 1px solid var(--ink); }
+.xp-fill {
+  height: 100%; width: 0%;
+  background: var(--lilac);
+  transition: width 220ms steps(12);
+}
+
+/* ---------- keypad ---------- */
+
+.pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+.key {
+  font-family: var(--mono);
+  background: var(--shell-hi);
+  border: 2px solid var(--ink);
+  box-shadow: 0 4px 0 var(--ink);
+  color: var(--paper);
+  padding: 8px 4px 7px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  transition: transform 60ms linear, box-shadow 60ms linear;
+}
+.key:hover { background: #433560; }
+.key:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+.key:focus-visible { outline: 2px solid var(--mint); outline-offset: 1px; }
+.key[disabled] { opacity: 0.4; cursor: not-allowed; box-shadow: 0 4px 0 var(--ink); }
+
+.key-top { font-size: 11px; letter-spacing: 0.1em; }
+.key-sub { font-size: 8px; letter-spacing: 0.06em; color: var(--mint-dim); }
+
+.key.urgent { background: var(--signal); color: var(--ink); }
+.key.urgent:hover { background: #ffb56b; }
+.key.urgent .key-sub { color: #6b3d0f; }
+
+/* ---------- colour picker ---------- */
+
+.looks { display: flex; align-items: center; gap: 8px; }
+.swatches { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.swatch {
+  width: 20px; height: 20px;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: transform 90ms linear;
+}
+.swatch:hover { transform: translateY(-2px); }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--mint); }
+.swatch:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+
+/* ---------- behaviour switches ---------- */
+
+.toybox {
+  border-top: 2px dashed var(--shell-hi);
+  padding-top: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

@@ -1,0 +1,131 @@
+/* Ruckus — the creature itself: sprite canvas, props it holds,
+   and the things it carries around. */
+
+/* ---------- the pet ---------- */
+
+.pet {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  pointer-events: auto;
+  cursor: grab;
+  will-change: transform;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 0 rgba(23, 18, 42, 0.28));
+  touch-action: none;
+}
+
+.pet.dragging { cursor: grabbing; }
+.pet.gone { display: none; }
+.pet.sulking { opacity: 0.72; filter: grayscale(0.45) drop-shadow(0 3px 0 rgba(23, 18, 42, 0.2)); }
+.pet > canvas:first-child {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Speech pill, used for reminders and reactions. */
+.bubble {
+  position: fixed;
+  pointer-events: none;
+  background: var(--rk-bubble-bg);
+  color: var(--rk-bubble-fg);
+  border: 2px solid var(--rk-bubble-edge);
+  box-shadow: 3px 3px 0 var(--rk-bubble-edge);
+  padding: 7px 11px;
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  max-width: 260px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 140ms linear, transform 140ms linear;
+}
+.bubble.show { opacity: 1; transform: translateY(0); }
+
+/* Thoughts are quieter than speech: dotted, dimmer, no hard shadow. */
+.bubble.thought {
+  background: var(--rk-bubble-bg);
+  border-style: dotted;
+  border-color: var(--rk-lilac);
+  box-shadow: none;
+  color: var(--rk-lilac);
+  font-style: italic;
+}
+.bubble b { color: var(--rk-mint); font-weight: 600; }
+
+/* On a dark page a dark bubble vanishes, so it flips to paper-on-ink. */
+.layer.on-dark .bubble {
+  --rk-bubble-bg: #f6f2ea;
+  --rk-bubble-fg: #1b1530;
+  --rk-bubble-edge: #0d0a17;
+}
+.layer.on-dark .bubble b { color: #2f7d5d; }
+.layer.on-dark .bubble.thought {
+  background: #e7e2f5;
+  color: #34275c;
+  border-color: #6b5aa8;
+}
+
+/* Hearts / crumbs that pop off the pet. */
+.spark {
+  position: fixed;
+  pointer-events: none;
+  font-size: 13px;
+  animation: rk-float 900ms linear forwards;
+}
+@keyframes rk-float {
+  from { opacity: 1; transform: translate(0, 0) scale(1); }
+  to   { opacity: 0; transform: translate(var(--dx, 6px), -26px) scale(1.25); }
+}
+
+/* ---------- stolen goods ---------- */
+
+.loot {
+  position: fixed;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 1;
+  transition: opacity 220ms linear, transform 220ms linear;
+  will-change: transform;
+}
+.loot.word {
+  white-space: nowrap;
+  background: rgba(255, 159, 69, 0.22);
+  box-shadow: 0 0 0 2px rgba(255, 159, 69, 0.55);
+  padding: 0 2px;
+}
+.loot.pic img {
+  display: block;
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border: 2px solid var(--rk-ink);
+  box-shadow: 3px 3px 0 rgba(23, 18, 42, 0.4);
+}
+.loot.carried { opacity: 0.95; }
+.loot.going { opacity: 0; transform: scale(0.6); }
+
+@media (prefers-reduced-motion: reduce) {
+  .loot { transition: none; }
+  .jar.wobble, .jar.near .jar-lid { animation: none; }
+}
+
+/* ---------- held props ---------- */
+
+/* The sprite canvas is selected as `.pet > canvas:first-child` specifically so
+   it cannot out-specify these rules — an earlier `.pet canvas` selector did,
+   and hidden props stayed on screen. */
+.prop {
+  position: absolute;
+  right: -18px;
+  bottom: 2px;
+  display: none;
+  image-rendering: pixelated;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 0 rgba(23, 18, 42, 0.25));
+}
+.prop.on { display: block; }
+.prop.left { right: auto; left: -18px; }

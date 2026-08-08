@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="pet.css">
+<link rel="stylesheet" href="tools.css">
+<title>Ruckus</title>
+</head>
+<body>
+<div class="device">
+
+  <header class="topbar">
+    <span class="brand">PET&nbsp;PIXEL</span>
+    <button class="chip" id="helpToggle" aria-expanded="false">Help</button>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab on" id="tabPet" role="tab" aria-selected="true" data-panel="panelPet">
+      <span class="tab-icon" aria-hidden="true">&#9679;</span>
+      <span class="tab-name">Ruckus</span>
+    </button>
+    <button class="tab" id="tabTools" role="tab" aria-selected="false" data-panel="panelTools">
+      <span class="tab-icon" aria-hidden="true">&#9632;</span>
+      <span class="tab-name">Toolkit</span>
+    </button>
+  </nav>
+
+  <section class="alert" id="grant" hidden>
+    <p id="grantText">Pixel can't reach your pages yet.</p>
+    <button class="chip go" id="grantBtn">Let Pixel onto pages</button>
+  </section>
+
+  <section class="help" id="help" hidden>
+    <h3>Getting on with it</h3>
+    <dl>
+      <dt>Click</dt><dd>Pat</dd>
+      <dt>Long press</dt><dd>Menu: tools, mischief, naps</dd>
+      <dt>Right click page</dt><dd>Same menu, without chasing it</dd>
+      <dt>Double click</dt><dd>Shoo it away for a few minutes</dd>
+      <dt>Drag</dt><dd>Pick it up and put it somewhere</dd>
+      <dt>Ctrl+Shift+F</dt><dd>Find on page &mdash; earns a treat</dd>
+      <dt>Alt+Shift+P</dt><dd>Hide it completely</dd>
+      <dt>Treat jar</dt><dd>Drag a treat onto its head</dd>
+    </dl>
+    <h3>What the bars mean</h3>
+    <dl>
+      <dt>Fed</dt><dd>Drops steadily. Feed it treats.</dd>
+      <dt>Mood</dt><dd>Pats, play and treats raise it; shooing lowers it.</dd>
+      <dt>Rest</dt><dd>Spent on mischief and play; refills when it naps.</dd>
+    </dl>
+    <h3>Tuning it yourself</h3>
+    <p><code>core/config.js</code> holds every weight and timing.
+    <code>core/lines.js</code> holds every line it says.
+    <code>content/mischief/</code> is one file per prank.</p>
+  </section>
+
+  <!-- ========================= PET ========================= -->
+  <div class="panel on" id="panelPet" role="tabpanel" aria-labelledby="tabPet">
+
+    <section class="lcd">
+      <div class="lcd-grain" aria-hidden="true"></div>
+      <div class="lcd-glow" aria-hidden="true"></div>
+      <canvas id="stage" width="240" height="240" aria-label="Your pet"></canvas>
+      <div class="nameplate">
+        <span class="petname" id="name">Ruckus</span>
+      </div>
+      <p class="status" id="status">Waking up&hellip;</p>
+    </section>
+
+    <section class="gauges">
+      <div class="gauge"><span class="tag">Fed</span><div class="cells" id="g-hunger"></div></div>
+      <div class="gauge"><span class="tag">Mood</span><div class="cells" id="g-happiness"></div></div>
+      <div class="gauge"><span class="tag">Rest</span><div class="cells" id="g-energy"></div></div>
+    </section>
+
+    <section class="xp">
+      <div class="xp-head">
+        <span id="levelLabel">Level 1</span>
+        <span id="xpLabel">0 / 26 xp</span>
+      </div>
+      <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+    </section>
+
+    <section class="pad">
+      <button class="key" id="feed">
+        <span class="key-top">Feed</span>
+        <span class="key-sub"><span id="treats">0</span> treats</span>
+      </button>
+      <button class="key" id="pat">
+        <span class="key-top">Pat</span>
+        <span class="key-sub">+mood</span>
+      </button>
+      <button class="key" id="wake">
+        <span class="key-top" id="wakeTop">Wake</span>
+        <span class="key-sub" id="wakeSub">rouse</span>
+      </button>
+    </section>
+
+    <section class="looks" id="looks">
+      <span class="tag">Colour</span>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <section class="toybox">
+      <h3 class="group">How it behaves</h3>
+      <label class="row"><input type="checkbox" id="s-enabled">
+        <span>Let it roam pages</span></label>
+      <label class="row"><input type="checkbox" id="s-mischief">
+        <span>Let it steal things off the page</span></label>
+      <label class="row"><input type="checkbox" id="s-chatter">
+        <span>Let it comment on what I'm reading</span></label>
+      <label class="row"><input type="checkbox" id="s-jar">
+        <span>Show the treat jar on pages</span></label>
+      <label class="row"><input type="checkbox" id="s-particles">
+        <span>Particle effects</span></label>
+      <label class="row"><input type="checkbox" id="s-motion">
+        <span>Calmer animation</span></label>
+      <label class="row"><input type="checkbox" id="s-sound">
+        <span>Sound effects</span></label>
+      <label class="row stack">
+        <span>Stay away from sites containing</span>
+        <textarea id="s-quiet" rows="2" spellcheck="false" placeholder="one per line"></textarea>
+      </label>
+      <div class="row split">
+        <button class="chip" id="comeBack">Stop sulking</button>
+        <button class="chip danger" id="reset">Start over</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========================= TOOLKIT ========================= -->
+  <div class="panel" id="panelTools" role="tabpanel" aria-labelledby="tabTools">
+
+    <section class="card feature">
+      <h3 class="card-title">Document tools</h3>
+      <p class="note">Merge, split, rotate and number PDFs. Images to PDF or
+        Word. PDF to images or text. Word to PDF or HTML. Runs entirely on this
+        machine &mdash; nothing is uploaded.</p>
+      <div class="actions">
+        <button class="chip primary" id="openTools">Open document tools</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">On any page</h3>
+      <dl class="shortcuts">
+        <dt>Ctrl+Shift+F</dt><dd>Find on page</dd>
+        <dt>Right click</dt><dd>Snip an area, reader mode</dd>
+        <dt></dt><dd>Link to selection, quote it</dd>
+        <dt></dt><dd>Bury this page for later</dd>
+        <dt>Alt+Shift+P</dt><dd>Hide the pet</dd>
+      </dl>
+      <p class="note">Everything is on the right-click menu under
+        <b>Ruckus</b>, so you never have to catch <b>Ruckus</b>.</p>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">Focus timer</h3>
+      <div class="timer-row">
+        <span class="timer-read" id="timerRead">off</span>
+        <button class="chip" id="timerBtn">Start</button>
+      </div>
+      <div class="field">
+        <label for="s-work">Pomodoro</label>
+        <span class="mins">
+          <input type="number" id="s-work" min="5" max="120" step="5"> work
+          <span class="sep">/</span>
+          <input type="number" id="s-rest" min="1" max="60" step="1"> rest
+        </span>
+      </div>
+      <div class="field">
+        <label for="s-water">Water reminder</label>
+        <span class="mins">
+          <input type="checkbox" id="s-water-on">
+          <input type="number" id="s-water" min="5" max="240" step="5"> min
+        </span>
+      </div>
+      <div class="field">
+        <label for="s-move">Move reminder</label>
+        <span class="mins">
+          <input type="checkbox" id="s-move-on">
+          <input type="number" id="s-move" min="5" max="240" step="5"> min
+        </span>
+      </div>
+      <div class="actions">
+        <button class="chip" id="testNudge">Test reminder</button>
+      </div>
+    </section>
+
+    <section class="card stash" id="stash" hidden>
+      <div class="stash-head">
+        <h3 class="card-title">Buried pages</h3>
+        <button class="chip" id="stashToggle" aria-expanded="true">Hide</button>
+      </div>
+      <ul class="stash-list" id="stashList"></ul>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">Clipboard</h3>
+      <label class="row"><input type="checkbox" id="s-clips">
+        <span>Remember what I copy (stays on this device)</span></label>
+      <p class="note">Copied text lands in the burrow &mdash; open it from the
+        pet's menu on any page.</p>
+      <div class="actions">
+        <button class="chip" id="forgetClips">Forget copied text</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">Search</h3>
+      <label class="row"><input type="checkbox" id="s-hijack">
+        <span>Take over Ctrl+F as well</span></label>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">If something looks wrong</h3>
+      <div class="actions">
+        <button class="chip" id="diagBtn">Run diagnostics</button>
+        <button class="chip" id="reloadTab">Reload this tab</button>
+        <button class="chip" id="debugBtn">Verbose logs</button>
+      </div>
+      <pre class="diag" id="diag" hidden></pre>
+    </section>
+  </div>
+
+</div>
+<script src="../core/sprites.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

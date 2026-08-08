@@ -1,0 +1,53 @@
+/* Ruckus — in-page shell: tokens, the overlay layer, bubbles,
+   particles. Loaded first; everything else assumes these variables. */
+
+/* Ruckus — in-page UI. Everything here lives inside a shadow root,
+   so selectors stay short and no page styles leak in. */
+
+:host {
+  /* Bubble colours are swapped by .on-dark below. */
+  --rk-bubble-bg: #241a33;
+  --rk-bubble-fg: #f4efe6;
+  --rk-bubble-edge: #17122a;
+
+  --rk-ink: #17122a;
+  --rk-shell: #241a33;
+  --rk-shell-hi: #362a4d;
+  --rk-glass: #0e2b25;
+  --rk-mint: #6ff2b8;
+  --rk-mint-dim: #3c9d78;
+  --rk-signal: #ff9f45;
+  --rk-lilac: #b8a7ff;
+  --rk-paper: #f4efe6;
+
+  --rk-mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono",
+             Menlo, Consolas, monospace;
+
+  all: initial;
+  font-family: var(--rk-mono);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+.particles {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  pointer-events: none;
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble, .finder { transition: none; }
+  .spark { animation-duration: 1ms; }
+}

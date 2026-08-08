@@ -1,0 +1,203 @@
+/* Ruckus — popup shell: tokens, header, tabs, help, alerts.
+   Anything specific to one tab lives in pet.css or tools.css. */
+
+:root {
+  --ink: #17122a;
+  --shell: #241a33;
+  --shell-hi: #362a4d;
+  --glass: #0e2b25;
+  --glass-lo: #0a211c;
+  --mint: #6ff2b8;
+  --mint-dim: #3c9d78;
+  --signal: #ff9f45;
+  --lilac: #b8a7ff;
+  --paper: #f4efe6;
+
+  /* the toolkit side is deliberately cooler and flatter */
+  --steel: #1d2030;
+  --steel-hi: #2a2f44;
+  --steel-line: #3a4059;
+  --steel-text: #c9d1e4;
+  --steel-dim: #7c87a3;
+
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* A `display` rule on a class beats the UA's [hidden] rule, so every section
+   styled with flex would stay visible however the code set `hidden`. */
+[hidden] { display: none !important; }
+
+body {
+  width: 300px;
+  background: var(--ink);
+  font-family: var(--mono);
+  color: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+.device {
+  background: var(--shell);
+  border: 3px solid var(--ink);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- header ---------- */
+
+.topbar { display: flex; align-items: center; justify-content: space-between; }
+.brand { font-size: 10px; letter-spacing: 0.34em; color: var(--lilac); }
+
+.chip {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--shell-hi);
+  border: 2px solid var(--ink);
+  padding: 4px 7px;
+  cursor: pointer;
+}
+.chip:hover { background: #433560; }
+.chip:focus-visible { outline: 2px solid var(--mint); outline-offset: 1px; }
+.chip.danger { color: #ff9aa8; }
+.chip.go { background: var(--signal); color: var(--ink); align-self: flex-start; }
+.chip.go:hover { background: #ffb56b; }
+
+/* ---------- tabs ---------- */
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+}
+
+.tab {
+  font-family: var(--mono);
+  background: #1c1530;
+  border: none;
+  color: var(--mint-dim);
+  padding: 7px 6px 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-bottom: 3px solid transparent;
+}
+.tab:hover { color: var(--paper); }
+.tab:focus-visible { outline: 2px solid var(--mint); outline-offset: -3px; }
+.tab-icon { font-size: 8px; }
+.tab-name { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+
+#tabPet.on {
+  background: var(--glass);
+  color: var(--mint);
+  border-bottom-color: var(--mint);
+}
+#tabTools.on {
+  background: var(--steel);
+  color: var(--steel-text);
+  border-bottom-color: var(--lilac);
+}
+
+.panel { display: none; flex-direction: column; gap: 10px; }
+.panel.on { display: flex; }
+
+/* ---------- shared rows ---------- */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.row.stack { flex-direction: column; align-items: stretch; gap: 5px; cursor: default; }
+.row.split { justify-content: space-between; }
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  background: #1a1329;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+}
+input[type="checkbox"]:checked { background: var(--mint); }
+input[type="checkbox"]:focus-visible { outline: 2px solid var(--mint); outline-offset: 1px; }
+
+textarea {
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--mint);
+  background: var(--glass-lo);
+  border: 2px solid var(--ink);
+  padding: 5px 6px;
+  resize: vertical;
+  outline: none;
+}
+textarea:focus { border-color: var(--mint-dim); }
+
+.group {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+.tag {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+/* ---------- alert + help ---------- */
+
+.alert {
+  background: #3a2a1c;
+  border: 2px solid var(--ink);
+  border-left: 5px solid var(--signal);
+  padding: 8px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.alert p { font-size: 10px; line-height: 1.55; color: #ffd9b0; white-space: pre-line; }
+
+.help {
+  border-top: 2px dashed var(--shell-hi);
+  padding-top: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.help h3 {
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--lilac); font-weight: 600;
+}
+.help dl {
+  display: grid; grid-template-columns: 92px 1fr; gap: 3px 8px;
+  font-size: 10px; line-height: 1.45;
+}
+.help dt { color: var(--mint); }
+.help dd { color: var(--paper); opacity: 0.85; }
+.help p { font-size: 10px; line-height: 1.55; opacity: 0.85; }
+.help code {
+  font-family: var(--mono); color: var(--signal);
+  background: var(--glass-lo); padding: 0 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
