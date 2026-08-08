@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
   "name": "Ruckus",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Your browser's mischievous sidekick. A prettier Ctrl+F, offline PDF and Word tools, and a creature that misbehaves.",
   "author": "Ruckus contributors",
-  "homepage_url": "https://github.com/yourname/ruckus",
+  "homepage_url": "https://github.com/lgubala/Ruckus",
   "permissions": [
     "storage",
     "alarms",
@@ -104,8 +104,8 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "ruckus@addons.mozilla.org",
-      "strict_min_version": "115.0",
+      "id": "ruckus@lgubala.github.io",
+      "strict_min_version": "140.0",
       "data_collection_permissions": {
         "required": [
           "none"

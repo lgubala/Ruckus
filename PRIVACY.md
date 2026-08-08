@@ -1,49 +1,55 @@
-# Privacy policy
+# Privacy Policy
 
-**Ruckus collects nothing, sends nothing, and has no servers.**
+Ruckus is designed to operate locally in your browser. It does not send user data to external servers.
 
-There is no analytics, no telemetry, no crash reporting, no accounts, and no
-network code anywhere in the extension. There is no network code anywhere in the source.
+## What data Ruckus handles
 
-## What is stored, and where
+Ruckus stores information locally in your browser's extension storage to provide its features. Depending on which features you use, this may include:
 
-Everything lives in your browser's local extension storage, on your machine
-only. Nothing syncs.
+- Your pet's name, appearance, stats, level, and other game state.
+- A limited history of websites you visit, consisting of hostnames, visit counts, and timestamps.
+- Pages you explicitly save using Ruckus.
+- Text you copy, if the optional clipboard-history feature is enabled.
+- Ruckus settings and preferences.
 
-| Stored | Why |
-| --- | --- |
-| The pet's name, colour, stats and level | So it persists between sessions |
-| Which sites you have visited, and a visit count per site | So it can say "here again" on familiar pages |
-| Pages you explicitly bury | The stash in the Toolkit tab |
-| Text you copy, if you leave that switch on | The clipboard history in the burrow |
-| Your settings | Obvious |
+Ruckus may also process webpage content locally when necessary to provide features such as page search, webpage tools, screenshots, and other user-initiated actions.
 
-## The two you should know about
+## Local processing
 
-**Clipboard history is off-limits by choice.** If enabled, text you copy on a
-page is kept locally so you can find it again. It never leaves your machine, but
-if you copy passwords on web pages, turn it off: *Toolkit &rarr; Clipboard &rarr;
-Remember what I copy*. **Forget copied text** wipes it.
+The information described above is stored and processed locally by the extension in your browser. Ruckus does not transmit this information to the developer or to third-party servers.
 
-**Site history is a visit count, not a log.** The pet keeps at most sixty
-hostnames with a visit tally and a timestamp. No URLs, no page contents, no
-titles.
+Ruckus does not use analytics, telemetry, advertising trackers, crash reporting, or user accounts.
 
-## Permissions, and why each is needed
+## Clipboard history
 
-| Permission | Why |
-| --- | --- |
-| `<all_urls>` | The pet walks around on pages and the finder searches them |
-| `storage` | Saving the above |
-| `tabs` | Knowing which tab is in front, so there is one pet and not one per tab |
-| `alarms` | Water, movement and pomodoro reminders |
-| `contextMenus` | The right-click menu |
-| `notifications` | Reminders when no page is visible |
+Clipboard history is optional and disabled unless you enable it.
 
-Screenshots use `tabs.captureVisibleTab` on your explicit action only; the image
-is cropped in the page and handed to you as a download. It is never transmitted.
+When enabled, Ruckus stores copied text locally so that you can access it again through the extension. This information is never transmitted by Ruckus.
 
-## Removing everything
+If you copy sensitive information such as passwords while clipboard history is enabled, you should disable the feature or clear the stored clipboard history.
 
-*Pet &rarr; Start over* resets the pet and clears its memory. Uninstalling the
-extension removes all stored data.
+## Website history
+
+Ruckus may maintain a limited local memory of websites you have visited. This consists of hostnames, visit counts, and timestamps used by the pet's site-memory features.
+
+Ruckus does not use this information to create or transmit a remote browsing-history profile.
+
+## Screenshots
+
+When you explicitly use Ruckus's screenshot or snipping feature, the extension captures the visible browser tab and processes the image locally. Screenshots are not transmitted to Ruckus servers or third-party servers.
+
+## Data sharing and selling
+
+Ruckus does not sell, rent, or transfer user data to third parties.
+
+Ruckus does not use user data for advertising, analytics, creditworthiness, lending, or other unrelated purposes.
+
+## Removing stored data
+
+You can use Ruckus's reset functionality to clear its stored pet state and memory.
+
+Uninstalling the extension removes the extension's locally stored data according to the browser's extension storage behavior.
+
+## Changes to this policy
+
+If the privacy practices of Ruckus change, this privacy policy will be updated accordingly.

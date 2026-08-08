@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Ruckus",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Your browser's mischievous sidekick. A prettier Ctrl+F, offline PDF and Word tools, and a creature that misbehaves.",
   "author": "Ruckus contributors",
-  "homepage_url": "https://github.com/yourname/ruckus",
+  "homepage_url": "https://github.com/lgubala/Ruckus",
   "permissions": [
     "storage",
     "alarms",
