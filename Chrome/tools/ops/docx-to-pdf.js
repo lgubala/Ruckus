@@ -21,10 +21,12 @@ RKDocTools.op({
     res.messages.forEach(m => ctx.log(m.message));
 
     // Turn the HTML into a flat list of blocks we can lay out.
-    const host = document.createElement('div');
-    host.innerHTML = res.value;
+    // Parsed with DOMParser rather than assigned to innerHTML: the document is
+    // inert, no scripts or images can run from it, and no markup reaches a live
+    // node. We only ever read textContent back out.
+    const parsed = new DOMParser().parseFromString(res.value, 'text/html');
     const blocks = [];
-    host.querySelectorAll('h1,h2,h3,h4,p,li,blockquote').forEach(function (el) {
+    parsed.body.querySelectorAll('h1,h2,h3,h4,p,li,blockquote').forEach(function (el) {
       const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
       if (!text) return;
       const tag = el.tagName.toLowerCase();

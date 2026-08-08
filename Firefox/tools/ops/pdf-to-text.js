@@ -12,7 +12,12 @@ RKDocTools.op({
   async run(ctx) {
     const util = RKDocTools.util;
     const file = ctx.files[0];
-    const pdf = await pdfjsLib.getDocument({ data: await util.bytes(file) }).promise;
+    const pdf = await pdfjsLib.getDocument({
+      data: await util.bytes(file),
+      // Extension pages forbid `new Function`. Telling pdf.js up front
+      // avoids it probing and falling over; it has slower pure-JS paths.
+      isEvalSupported: false
+    }).promise;
     let all = '';
     let empty = 0;
 

@@ -5,8 +5,11 @@
 - Renamed to **Ruckus** — your browser's mischievous sidekick
 - The pet is simply called Ruckus; the rename field is gone
 - Installs from before the rename keep their level, memory and settings
-- Prepared for publishing: MIT licence, privacy policy, reviewer notes,
-  third-party attribution with verifiable hashes, and a build script
+- Prepared for publishing: MIT licence, privacy policy, reviewer notes and
+  third-party attribution with verifiable hashes
+- Declared `data_collection_permissions: none` for AMO
+- Replaced the one `innerHTML` assignment with `DOMParser`
+- Told pdf.js `isEvalSupported: false`, since extension pages forbid `new Function`
 
 ## 0.4.0
 

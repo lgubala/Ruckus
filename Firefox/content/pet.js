@@ -102,8 +102,7 @@
 
     function say(text, ms) {
       if (!bubble.classList.contains('thought')) bubble.classList.remove('thought');
-      bubble.innerHTML = '';
-      bubble.appendChild(document.createTextNode(text));
+      bubble.textContent = text;
       positionBubble();
       bubble.classList.add('show');
       clearTimeout(bubbleTimer);
