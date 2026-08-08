@@ -1,5 +1,10 @@
 # Ruckus
 
+<p align="center">
+  <img src="docs/screenshots/1.png" alt="Ruckus watching movies" width="30%">
+  <img src="docs/screenshots/4.png" alt="Ruckus taking notes" width="30%">
+  <img src="docs/screenshots/5.png" alt="Ruckus is searching" width="30%">
+</p>
 **Your browser's mischievous sidekick.**
 
 A pixel creature that lives in your browser. It wanders your pages, naps, chases
@@ -14,19 +19,14 @@ at all.**
 
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 
-<!-- docs/screenshots/popup.png, tools.png, page.png -->
+<p align="center">
+  <img src="docs/screenshots/3.png" alt="Curious Ruckus" width="1400">
+</p>
 
 ## Install
 
-**Firefox** — `about:debugging#/runtime/this-firefox` → Load Temporary Add-on →
-pick `Firefox/manifest.json`.
-
-**Chrome** — `chrome://extensions` → Developer mode → Load unpacked → pick the
-`Chrome` folder.
-
-The two folders are complete, self-contained copies of the extension. `Firefox`
-is Manifest V2, `Chrome` is Manifest V3. **Any change to one must be made in the
-other**; nothing keeps them in sync automatically.
+### [➜ Get it for Firefox](https://addons.mozilla.org/firefox/addon/lingo-loco/)
+### [➜ Get it for Chrome](https://chromewebstore.google.com/)
 
 ## Layout
 
