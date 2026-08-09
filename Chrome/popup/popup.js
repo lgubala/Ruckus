@@ -45,6 +45,8 @@
     timerRead: document.getElementById('timerRead'),
     timerBtn: document.getElementById('timerBtn'),
     openTools: document.getElementById('openTools'),
+    offSite: document.getElementById('offSite'),
+    offAll: document.getElementById('offAll'),
     forgetClips: document.getElementById('forgetClips'),
     sQuiet: document.getElementById('s-quiet'),
     grant: document.getElementById('grant'),
@@ -53,7 +55,6 @@
     stash: document.getElementById('stash'),
     stashList: document.getElementById('stashList'),
     stashToggle: document.getElementById('stashToggle'),
-    looks: document.getElementById('looks'),
     swatches: document.getElementById('swatches'),
     testNudge: document.getElementById('testNudge'),
     diag: document.getElementById('diag'),
@@ -122,22 +123,13 @@
   // ---- gauges -------------------------------------------------------------
 
   function paintGauge(id, value) {
-    var host = document.getElementById(id);
-    var cells = host.children;
-    if (cells.length !== 10) {
-      host.textContent = '';
-      for (var i = 0; i < 10; i++) {
-        var c = document.createElement('div');
-        c.className = 'cell';
-        host.appendChild(c);
-      }
-      cells = host.children;
-    }
-    var filled = Math.round(value / 10);
-    var tone = value < 25 ? 'bad' : value < 50 ? 'warn' : 'on';
-    for (var j = 0; j < 10; j++) {
-      cells[j].className = 'cell' + (j < filled ? ' ' + tone : '');
-    }
+    var fill = document.getElementById(id);
+    var num = document.getElementById('n-' + id.replace('g-', ''));
+    if (!fill) return;
+    fill.style.width = Math.max(0, Math.min(100, value)) + '%';
+    fill.classList.toggle('low', value < 30);
+    fill.classList.toggle('mid', value >= 30 && value < 55);
+    if (num) num.textContent = Math.round(value);
   }
 
   // ---- looks ---------------------------------------------------------------
@@ -165,7 +157,6 @@
 
   function renderLooks(v) {
     buildLooks();
-    el.looks.hidden = false;
     var chosen = v.settings.color || 'amber';
     Array.prototype.forEach.call(el.swatches.children, function (b) {
       b.setAttribute('aria-pressed', String(b.dataset.color === chosen));
@@ -221,11 +212,12 @@
     view = v;
     el.status.textContent = STATUS[v.mood] || STATUS.content;
     // (overridden further down if the pet is off sulking)
-    el.level.textContent = 'Level ' + v.level;
-    el.xp.textContent = v.xpInLevel + ' / ' + v.xpForNext + ' xp';
+    el.level.textContent = 'Lv ' + v.level;
+    el.xp.textContent = v.xpInLevel + ' / ' + v.xpForNext;
     el.xpFill.style.width = Math.min(100, (v.xpInLevel / Math.max(1, v.xpForNext)) * 100) + '%';
     el.treats.textContent = v.treats;
 
+    renderQuickOff(v);
     renderLooks(v);
     renderStash(v.stash || []);
 
@@ -239,7 +231,7 @@
     if (v.sulkMinutes > 0) {
       el.wake.dataset.mode = 'callback';
       el.wake.disabled = false;
-      el.wake.classList.add('urgent');
+      el.wake.classList.add('go');
       el.wakeTop.textContent = 'Make up';
       el.wakeSub.textContent = v.sulkMinutes + 'm left';
       el.status.textContent = 'Sulking in the corner. Click it on the page, or ' +
@@ -247,7 +239,7 @@
     } else {
       el.wake.dataset.mode = 'wake';
       el.wake.disabled = !v.asleep;
-      el.wake.classList.remove('urgent');
+      el.wake.classList.remove('go');
       el.wakeTop.textContent = 'Wake';
       el.wakeSub.textContent = 'rouse';
     }
@@ -398,6 +390,40 @@
   el.sJar.addEventListener('change', function () {
     pushSettings({ showJar: el.sJar.checked });
   });
+  // ---- the two quick off switches ------------------------------------------
+
+  function hostOfTab(tab) {
+    try { return new URL(tab.url).hostname.replace(/^www\./, ''); }
+    catch (_) { return ''; }
+  }
+
+  function renderQuickOff(v) {
+    var off = v.settings.enabled === false;
+    el.offAll.setAttribute('aria-pressed', String(off));
+    el.offAll.textContent = off ? 'Turn Ruckus on' : 'Turn Ruckus off';
+
+    activeTab().then(function (tab) {
+      var host = tab ? hostOfTab(tab) : '';
+      var muted = host && (v.settings.mutedSites || []).indexOf(host) !== -1;
+      el.offSite.disabled = !host;
+      el.offSite.setAttribute('aria-pressed', String(!!muted));
+      el.offSite.textContent = !host ? 'Off on this site'
+        : muted ? 'On for ' + host : 'Off on ' + host;
+      el.offSite.title = host ? host : 'No ordinary page in front';
+    });
+  }
+
+  el.offAll.addEventListener('click', function () {
+    pushSettings({ enabled: !(view && view.settings.enabled === false) ? false : true });
+  });
+
+  el.offSite.addEventListener('click', function () {
+    activeTab().then(function (tab) {
+      var host = tab ? hostOfTab(tab) : '';
+      if (host) send('toggleMuteSite', { host: host });
+    });
+  });
+
   el.openTools.addEventListener('click', function () {
     api.tabs.create({ url: api.runtime.getURL('tools/tools.html') });
     window.close();

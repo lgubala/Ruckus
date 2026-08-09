@@ -31,6 +31,7 @@
 
 body {
   width: 300px;
+  max-width: 100%;
   background: var(--ink);
   font-family: var(--mono);
   color: var(--paper);
@@ -200,4 +201,33 @@ textarea:focus { border-color: var(--mint-dim); }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
+}
+
+
+/* ---------- small screens ---------- */
+/* On Android the popup opens as a full page, so a fixed 300px column renders
+   as an unreadable strip in the corner. Fill the width and size up the type. */
+
+@media (max-width: 560px) {
+  body { width: 100%; font-size: 15px; }
+
+  .device { padding: 14px; gap: 14px; border-width: 2px; }
+
+  .brand { font-size: 13px; }
+  .chip { font-size: 12px; padding: 9px 13px; }
+
+  .tab { padding: 12px 8px; }
+  .tab-name { font-size: 14px; }
+
+  .row { font-size: 14px; line-height: 1.6; gap: 11px; }
+  input[type="checkbox"] { width: 22px; height: 22px; }
+
+  .group, .tag { font-size: 12px; }
+  .alert p { font-size: 13px; }
+
+  .help dl { grid-template-columns: 130px 1fr; font-size: 13px; }
+  .help h3 { font-size: 12px; }
+  .help p { font-size: 13px; }
+
+  textarea { font-size: 14px; min-height: 5rem; }
 }

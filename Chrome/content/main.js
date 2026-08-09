@@ -381,6 +381,7 @@
         if (next.pos) pet.placeAt(next.pos.xr, next.pos.yr);
       }
       pet.setSulking(next.sulkMinutes > 0);
+      if (panel) panel.refresh();
       renderBadge();
     } else if (pet.visible) {
       pet.hide();
@@ -413,6 +414,7 @@
     var RKChatter = shared('RKChatter');
     var RKBrain = shared('RKBrain');
     var RKActivity = shared('RKActivity');
+    var RKPanel = shared('RKPanel');
     var RKTreats = shared('RKTreats');
     if (!RKPet || !RKFinder || !shared('RKSprites') || !RKParticles) {
       throw new Error('sibling content scripts did not load (RKSprites=' +
@@ -439,7 +441,9 @@
       root: layer,
       particles: particles,
       // Bigger sprite on big screens so it stays readable.
-      scale: window.innerWidth >= 1900 ? 4 : 3,
+      // Big screens get a bigger sprite; phones get a smaller one so it does
+      // not cover half the article.
+      scale: window.innerWidth >= 1900 ? 4 : (window.innerWidth < 560 ? 2 : 3),
       onPat: function () { send('pat'); },
       onShoo: function () { send('shoo'); closeMenu(); },
       onForgive: function () { send('comeBack'); },
@@ -614,6 +618,22 @@
       });
     }
 
+    if (RKPanel) {
+      panel = RKPanel.create({
+        root: layer,
+        view: function () { return view; },
+        moodLine: function (v) { return MOOD_LINE[v.mood] || MOOD_LINE.content; },
+        act: function (a) { send(a); },
+        openBurrow: function () { panel.hide(); openBurrow('stash'); },
+        openFinder: function () { panel.hide(); openFinder(); },
+        openTools: function () { send('openTools'); },
+        offHere: function () {
+          send('settings', { settings: { enabled: view.settings.enabled === false } });
+          panel.hide();
+        }
+      });
+    }
+
     // Arriving somewhere builds a bond with the site over repeat visits.
     send('visit', { host: location.hostname.replace(/^www\./, '') });
 
@@ -623,6 +643,7 @@
       if (!msg) return;
       if (msg.type === 'RK_STATE') applyState(msg.state, msg.event);
       if (msg.type === 'RK_MENU') { runMenuAction(msg.id); return; }
+      if (msg.type === 'RK_PANEL') { if (panel) panel.toggle(); return; }
       if (msg.type === 'RK_NUDGE') { showNudge(msg); return; }
       if (msg.type === 'RK_COMMAND') {
         if (msg.command === 'toggle-search') openFinder();
@@ -803,6 +824,15 @@
     if (menuEl) menuEl.classList.remove('open');
   }
 
+  var MOOD_LINE = {
+    hungry: 'Rummaging for crumbs.',
+    glum: 'Could use some attention.',
+    sleepy: 'Out cold.',
+    sulking: 'Facing the wall.',
+    delighted: 'Thrilled with everything.',
+    content: 'Pottering about happily.'
+  };
+
   var MISCHIEF_MENU = [
     ['tilt', 'Tilt something', 'rotate'],
     ['flip', 'Flip a picture', 'mirror'],
@@ -946,7 +976,10 @@
     'rk-burrow': function () { openBurrow('stash'); },
     'rk-feed': function () { send('feed'); },
     'rk-pomodoro': function () { send('startTimer', { phase: 'work' }); },
-    'rk-call': function () { comeHere(); }
+    'rk-call': function () { comeHere(); },
+    'rk-status': function () { if (panel) panel.show(); },
+    'rk-feed': function () { send('feed'); },
+    'rk-pat': function () { send('pat'); }
   };
 
   function runMenuAction(id) {

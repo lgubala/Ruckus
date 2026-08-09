@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Ruckus",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "description": "Your browser's mischievous sidekick. A prettier Ctrl+F, offline PDF and Word tools, and a creature that misbehaves.",
   "author": "Ruckus contributors",
   "homepage_url": "https://github.com/lgubala/Ruckus",
@@ -55,6 +55,7 @@
         "content/quirks/play.js",
         "content/quirks/critter.js",
         "content/brain.js",
+        "content/panel.js",
         "content/main.js"
       ],
       "run_at": "document_idle",

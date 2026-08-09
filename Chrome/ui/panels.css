@@ -43,6 +43,7 @@
   top: 16px;
   right: 24px;
   width: 358px;
+  max-width: calc(100vw - 24px);
   pointer-events: auto;
   background: var(--rk-shell);
   border: 3px solid var(--rk-ink);
@@ -391,3 +392,213 @@
 }
 .badge.rest .badge-clock { color: var(--rk-signal); }
 .badge.rest .badge-phase { color: var(--rk-signal); }
+
+
+/* ---------- narrow screens ---------- */
+/* The finder was a fixed 358px pinned 24px from the right, which on a phone
+   pushed it off the left edge and wrapped the query onto its own line. */
+
+@media (max-width: 560px) {
+  .finder {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    padding: 10px;
+  }
+  .finder .lip { font-size: 11px; padding-bottom: 8px; }
+  .screen { padding: 10px 11px; gap: 10px; }
+  .screen input { font-size: 17px; }      /* 16px+ stops iOS/Android zooming in */
+  .screen canvas { width: 32px; height: 32px; }
+  .count { font-size: 14px; }
+
+  .controls { gap: 6px; padding-top: 10px; flex-wrap: wrap; }
+  .btn { font-size: 13px; padding: 9px 12px; }
+  .btn.nav { padding: 9px 15px; font-size: 15px; }
+
+  /* Bigger tap targets, and the ribbon needs to be thumb-width. */
+  .ribbon { width: 22px; }
+  .tick { width: 16px; height: 5px; }
+  .tick.current { width: 20px; height: 7px; }
+
+  .menu { min-width: 210px; }
+  .menu button { padding: 12px 12px; font-size: 15px; }
+  .menu .k { font-size: 12px; }
+
+  .burrow { right: 10px; left: 10px; width: auto; bottom: 96px; max-height: 55vh; }
+  .burrow-tab { font-size: 11px; padding: 8px 12px; }
+  .burrow-item { padding: 11px 10px; }
+  .burrow-title { font-size: 14px; }
+
+  .jar { width: 60px; right: 14px; bottom: 14px; padding: 7px 0 8px; }
+  .jar-count { font-size: 19px; }
+  .badge { right: 14px; bottom: 92px; padding: 8px 13px; }
+  .badge-clock { font-size: 19px; }
+}
+
+/* ---------- the character card ---------- */
+/* The same information as the toolbar popup, drawn in the page, because on
+   Android the popup is three taps deep in Settings. */
+
+.card {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translate(-50%, 14px);
+  width: min(340px, calc(100vw - 24px));
+  pointer-events: auto;
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  background: linear-gradient(160deg, #2b2145 0%, #1b1530 60%);
+  border: 1px solid rgba(184, 167, 255, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 140ms ease-out, transform 140ms ease-out;
+}
+.card.open { display: flex; opacity: 1; transform: translate(-50%, 0); }
+
+.card-head { display: flex; align-items: center; gap: 14px; position: relative; }
+
+.card-art {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: radial-gradient(circle at 50% 40%,
+    rgba(111, 242, 184, 0.20), rgba(111, 242, 184, 0.02) 70%);
+  border: 1px solid rgba(111, 242, 184, 0.25);
+}
+.card-art canvas { image-rendering: pixelated; width: 62px; height: 62px; }
+
+.card-who { flex: 1 1 auto; min-width: 0; }
+.card-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #eef0ff;
+  margin: 0;
+}
+.card-mood { font-size: 12px; color: #a99fd0; margin: 2px 0 7px; }
+
+.card-level { display: flex; align-items: center; gap: 8px; }
+.card-level-num {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--rk-lilac);
+  white-space: nowrap;
+}
+.card-xp {
+  flex: 1 1 auto;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.card-xp-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--rk-lilac), #8bf7c8);
+}
+
+.card-x {
+  all: unset;
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  cursor: pointer;
+  color: #6f6790;
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 8px;
+}
+.card-x:hover { color: #eef0ff; background: rgba(255, 255, 255, 0.06); }
+
+.card-stats { display: flex; flex-direction: column; gap: 8px; }
+.card-stat { display: grid; grid-template-columns: 42px 1fr 28px; align-items: center; gap: 10px; }
+.card-stat-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8d85b0;
+}
+.card-stat-track {
+  height: 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+.card-stat-fill {
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #4fd6a4, #8bf7c8);
+  transition: width 260ms ease-out;
+}
+.card-stat-fill.low { background: linear-gradient(90deg, #e4685f, #ff9f45); }
+.card-stat-num {
+  font-size: 11px;
+  color: #8d85b0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.card-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.card-key {
+  all: unset;
+  cursor: pointer;
+  text-align: center;
+  padding: 11px 6px 9px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background 120ms linear, transform 80ms linear;
+}
+.card-key:hover { background: rgba(255, 255, 255, 0.11); }
+.card-key:active { transform: translateY(1px); }
+.card-key[disabled] { opacity: 0.35; cursor: not-allowed; }
+.card-key.go {
+  background: linear-gradient(180deg, #6ff2b8, #4fd6a4);
+  border-color: transparent;
+}
+.card-key.go .card-key-top { color: #10221c; }
+.card-key.go .card-key-sub { color: #2c5a48; }
+.card-key-top { font-size: 13px; font-weight: 600; color: #eef0ff; }
+.card-key-sub { font-size: 10px; color: #8d85b0; }
+
+.card-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.card-link {
+  all: unset;
+  cursor: pointer;
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #b3abd6;
+  padding: 8px 6px;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+.card-link:hover { color: #eef0ff; border-color: var(--rk-lilac); }
+
+@media (max-width: 560px) {
+  .card { bottom: 14px; padding: 18px; gap: 16px; border-radius: 18px; }
+  .card-art { width: 84px; height: 84px; }
+  .card-art canvas { width: 74px; height: 74px; }
+  .card-name { font-size: 20px; }
+  .card-mood { font-size: 13px; }
+  .card-stat { grid-template-columns: 48px 1fr 32px; }
+  .card-stat-track { height: 11px; }
+  .card-key { padding: 15px 6px 13px; }
+  .card-key-top { font-size: 15px; }
+  .card-link { font-size: 13px; padding: 12px 6px; }
+}

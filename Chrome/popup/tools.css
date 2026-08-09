@@ -171,3 +171,26 @@
   font-weight: 600;
 }
 .card .chip.primary:hover { background: #8bf7c8; }
+
+
+@media (max-width: 560px) {
+  .card { padding: 13px 14px 14px; }
+  .card-title { font-size: 12px; }
+  .note { font-size: 13px; }
+
+  .shortcuts { grid-template-columns: 1fr; gap: 2px 0; font-size: 13px; }
+  .shortcuts dt { margin-top: 8px; }
+  .shortcuts dt:empty { display: none; }
+  .shortcuts dd { padding-left: 12px; }
+
+  .field { flex-direction: column; align-items: flex-start; gap: 7px; font-size: 14px; }
+  .mins { font-size: 13px; }
+  .mins input[type="number"] { width: 76px; padding: 9px 8px; font-size: 14px; }
+
+  .timer-read { font-size: 17px; }
+  .actions .chip { flex: 1 1 auto; text-align: center; }
+
+  .stash-list { max-height: none; }
+  .stash-list a { font-size: 13px; white-space: normal; }
+  .diag { font-size: 11px; }
+}

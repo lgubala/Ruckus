@@ -277,7 +277,15 @@
       mask.addEventListener('pointerdown', function (e) {
         e.preventDefault();
         start = { x: e.clientX, y: e.clientY };
-        mask.setPointerCapture(e.pointerId);
+        try { mask.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      // Without this the browser claims the gesture for scrolling and the
+      // drag never completes. It is why nothing was captured on a phone.
+      mask.addEventListener('touchmove', function (e) { e.preventDefault(); },
+        { passive: false });
+      mask.addEventListener('pointercancel', function () {
+        // A cancelled gesture must not leave the mask stuck over the page.
+        cleanup();
       });
       mask.addEventListener('pointermove', update);
       mask.addEventListener('pointerup', function (e) {
@@ -334,11 +342,17 @@
           var a = document.createElement('a');
           a.href = url;
           a.download = name;
-          a.style.display = 'none';
+          a.rel = 'noopener';
+          a.target = '_self';
+          a.style.cssText = 'position:fixed;left:-9999px;opacity:0';
           document.body.appendChild(a);
           a.click();
-          a.remove();
-          setTimeout(function () { URL.revokeObjectURL(url); }, 8000);
+          // Firefox for Android needs the link to survive the click; removing
+          // it synchronously cancelled the download and saved nothing.
+          setTimeout(function () {
+            a.remove();
+            URL.revokeObjectURL(url);
+          }, 20000);
 
           copyImage(blob).then(function (copied) {
             say(L.get(copied ? 'tools.snipDone' : 'tools.snipSaved'), 3600);

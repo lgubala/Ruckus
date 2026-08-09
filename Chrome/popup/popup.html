@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="base.css">
 <link rel="stylesheet" href="pet.css">
 <link rel="stylesheet" href="tools.css">
@@ -58,48 +59,58 @@
   <!-- ========================= PET ========================= -->
   <div class="panel on" id="panelPet" role="tabpanel" aria-labelledby="tabPet">
 
-    <section class="lcd">
-      <div class="lcd-grain" aria-hidden="true"></div>
-      <div class="lcd-glow" aria-hidden="true"></div>
-      <canvas id="stage" width="240" height="240" aria-label="Your pet"></canvas>
-      <div class="nameplate">
-        <span class="petname" id="name">Ruckus</span>
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-top">
+        <div class="hero-art">
+          <canvas id="stage" width="240" height="240" aria-label="Ruckus"></canvas>
+        </div>
+        <div class="hero-id">
+          <h2 class="hero-name" id="name">RUCKUS</h2>
+          <p class="hero-mood" id="status">Waking up&hellip;</p>
+          <div class="hero-level">
+            <span class="hero-lv" id="levelLabel">Lv 1</span>
+            <div class="hero-xp"><div class="hero-xp-fill" id="xpFill"></div></div>
+            <span class="hero-xp-num" id="xpLabel">0 / 26</span>
+          </div>
+        </div>
       </div>
-      <p class="status" id="status">Waking up&hellip;</p>
-    </section>
 
-    <section class="gauges">
-      <div class="gauge"><span class="tag">Fed</span><div class="cells" id="g-hunger"></div></div>
-      <div class="gauge"><span class="tag">Mood</span><div class="cells" id="g-happiness"></div></div>
-      <div class="gauge"><span class="tag">Rest</span><div class="cells" id="g-energy"></div></div>
-    </section>
-
-    <section class="xp">
-      <div class="xp-head">
-        <span id="levelLabel">Level 1</span>
-        <span id="xpLabel">0 / 26 xp</span>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-label">Fed</span>
+          <div class="stat-track"><div class="stat-fill" id="g-hunger"></div></div>
+          <span class="stat-num" id="n-hunger">0</span></div>
+        <div class="stat"><span class="stat-label">Mood</span>
+          <div class="stat-track"><div class="stat-fill" id="g-happiness"></div></div>
+          <span class="stat-num" id="n-happiness">0</span></div>
+        <div class="stat"><span class="stat-label">Rest</span>
+          <div class="stat-track"><div class="stat-fill" id="g-energy"></div></div>
+          <span class="stat-num" id="n-energy">0</span></div>
       </div>
-      <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
-    </section>
 
-    <section class="pad">
-      <button class="key" id="feed">
-        <span class="key-top">Feed</span>
-        <span class="key-sub"><span id="treats">0</span> treats</span>
-      </button>
-      <button class="key" id="pat">
-        <span class="key-top">Pat</span>
-        <span class="key-sub">+mood</span>
-      </button>
-      <button class="key" id="wake">
-        <span class="key-top" id="wakeTop">Wake</span>
-        <span class="key-sub" id="wakeSub">rouse</span>
-      </button>
-    </section>
+      <div class="hero-keys">
+        <button class="hkey go" id="feed">
+          <span class="hkey-top">Feed</span>
+          <span class="hkey-sub"><span id="treats">0</span> treats</span>
+        </button>
+        <button class="hkey" id="pat">
+          <span class="hkey-top">Pat</span><span class="hkey-sub">+mood</span>
+        </button>
+        <button class="hkey" id="wake">
+          <span class="hkey-top" id="wakeTop">Wake</span>
+          <span class="hkey-sub" id="wakeSub">rouse</span>
+        </button>
+      </div>
 
-    <section class="looks" id="looks">
-      <span class="tag">Colour</span>
-      <div class="swatches" id="swatches"></div>
+      <div class="hero-colours">
+        <span class="hero-colours-label">Colour</span>
+        <div class="swatches" id="swatches"></div>
+      </div>
+
+      <div class="hero-off">
+        <button class="offbtn" id="offSite">Off on this site</button>
+        <button class="offbtn" id="offAll">Turn Ruckus off</button>
+      </div>
     </section>
 
     <section class="toybox">

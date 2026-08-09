@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.2.0
+
+- **Character card in the page.** On Android the toolbar popup is three taps
+  deep in Settings, which is no good for a glance. The same information now
+  opens over the page from the right-click menu, the pet's own menu, or
+  *How is Ruckus?*
+- **Richer right-click menu**, since on a phone it is the quickest route to
+  anything: status, feed, pat, find, snip, reader mode, burrow, document tools,
+  come here, and the two off switches
+- **Popup redesigned as a character profile** — soft dark card, glow behind the
+  sprite, gradient stat bars with numbers, pill buttons, round colour dots
+- The off switches moved into the profile card
+
+## 1.1.0 — mobile
+
+- **Added the viewport meta tag.** Without it Firefox for Android rendered the
+  popup at desktop scale, as an unreadable strip in the corner. Everything below
+  follows from finally being able to see it.
+- Popup fills the screen under 560px, with larger type and finger-sized targets
+- The finder was a fixed 358px pinned 24px from the right, which pushed it off a
+  phone screen and wrapped the query onto its own line. It now spans the width.
+- **Two new off switches** — *Off on this site* and *Turn Ruckus off* — in the
+  popup and on the right-click menu
+- **Area snip works on touch.** The drag was being stolen by page scrolling, and
+  the download link was removed before Android had finished with it, so nothing
+  was ever saved. There is now also a one-tap *Whole screen* button.
+- Smaller sprite and more bottom clearance on phones; hover reactions no longer
+  fire on tap; larger tap targets throughout
+
 ## 1.0.0
 
 - Renamed to **Ruckus** — your browser's mischievous sidekick

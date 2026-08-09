@@ -113,6 +113,12 @@
       fondOfHere:   'Fine. I like it here anyway.'
     },
 
+    // ---- switching it off ----
+    off: {
+      site: 'Right then, not here.',
+      all:  'Fine. Wake me from the toolbar.'
+    },
+
     // ---- the treat jar ----
     treats: {
       offered: ['Is that for me?', 'Yes. Yes please.', 'I have been very good.',

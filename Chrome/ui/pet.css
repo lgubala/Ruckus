@@ -129,3 +129,13 @@
 }
 .prop.on { display: block; }
 .prop.left { right: auto; left: -18px; }
+
+
+/* ---------- touch ---------- */
+/* Coarse pointers have no hover, so the pet must be easy to hit and its
+   gestures must not be stolen by the page's own scrolling. */
+
+@media (pointer: coarse) {
+  .pet { touch-action: none; }
+  .prop { transform: scale(1.15); transform-origin: bottom center; }
+}

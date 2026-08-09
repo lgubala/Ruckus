@@ -448,6 +448,11 @@ var ACTIONS = {
     return { silent: true };
   },
 
+  openTools: function () {
+    api.tabs.create({ url: api.runtime.getURL('tools/tools.html') });
+    return { silent: true };
+  },
+
   nap: function (s) {
     s.asleep = true;
     return { event: 'napping' };
@@ -643,6 +648,9 @@ if (api.alarms) {
 // ---- native right-click menu -------------------------------------------
 
 var MENU = [
+  ['rk-status', 'How is Ruckus?', ['page', 'selection', 'image']],
+  ['rk-feed', 'Feed a treat', ['page', 'selection', 'image']],
+  ['rk-pat', 'Give it a pat', ['page', 'selection', 'image']],
   ['rk-find', 'Find on page', ['page', 'selection']],
   ['rk-snip', 'Snip an area', ['page', 'selection', 'image']],
   ['rk-reader', 'Reader mode', ['page']],
@@ -653,6 +661,8 @@ var MENU = [
   ['rk-feed', 'Feed the pet', ['page']],
   ['rk-pomodoro', 'Start a pomodoro', ['page']],
   ['rk-call', 'Come here', ['page', 'selection', 'image']],
+  ['rk-off-site', 'Turn off on this site', ['page', 'selection', 'image']],
+  ['rk-off-all', 'Turn Ruckus off everywhere', ['page', 'selection', 'image']],
   ['rk-docs', 'Document tools\u2026', ['page', 'selection', 'image']]
 ];
 
@@ -673,6 +683,16 @@ function buildContextMenus() {
 
 if (api.contextMenus) {
   api.contextMenus.onClicked.addListener(function (info, tab) {
+    if (info.menuItemId === 'rk-off-site' || info.menuItemId === 'rk-off-all') {
+      var host = '';
+      try { host = new URL(info.pageUrl || '').hostname.replace(/^www\./, ''); } catch (_) {}
+      handle({
+        action: info.menuItemId === 'rk-off-all' ? 'settings' : 'toggleMuteSite',
+        payload: info.menuItemId === 'rk-off-all'
+          ? { settings: { enabled: false } } : { host: host }
+      });
+      return;
+    }
     if (info.menuItemId === 'rk-docs') {
       api.tabs.create({ url: api.runtime.getURL('tools/tools.html') });
       return;

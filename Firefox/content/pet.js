@@ -68,7 +68,9 @@
 
     function floorY() {
       // The sprite has a transparent margin, so sit it lower to compensate.
-      return window.innerHeight - self.size + S.PAD * scale - 8;
+      // Phones have chrome at the bottom that would swallow the pet.
+      var clearance = window.innerWidth < 560 ? 26 : 8;
+      return window.innerHeight - self.size + S.PAD * scale - clearance;
     }
 
     self.y = floorY();
@@ -922,8 +924,13 @@
     // proximity check, which only makes him turn to look.
     var HOVER_ACTS = ['shrug', 'headtilt', 'wave', 'peer'];
     var lastHover = 0;
+    // pointerenter fires on a tap on touch devices, which made every tap play
+    // a hover reaction before the tap itself was handled.
+    var coarsePointer = false;
+    try { coarsePointer = window.matchMedia('(pointer: coarse)').matches; } catch (_) {}
 
-    el.addEventListener('pointerenter', function () {
+    el.addEventListener('pointerenter', function (e) {
+      if (coarsePointer || (e && e.pointerType === 'touch')) return;
       var now = Date.now();
       if (now - lastHover < 2600) return;
       lastHover = now;

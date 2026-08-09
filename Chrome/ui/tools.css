@@ -8,6 +8,8 @@
   inset: 0;
   pointer-events: auto;
   cursor: crosshair;
+  touch-action: none;
+  overscroll-behavior: contain;
   background: rgba(23, 18, 42, 0.42);
 }
 .snip-box {
@@ -34,3 +36,32 @@
 
 /* Hide the whole overlay while a screenshot is being taken. */
 .layer.invisible { visibility: hidden; }
+
+
+/* ---------- touch fallback ---------- */
+
+.snip-whole, .snip-cancel {
+  position: absolute;
+  bottom: 24px;
+  font-family: var(--rk-mono);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  border: 2px solid var(--rk-ink);
+  box-shadow: 3px 3px 0 var(--rk-ink);
+  padding: 13px 20px;
+  cursor: pointer;
+}
+.snip-whole {
+  left: 50%;
+  transform: translateX(-100%);
+  margin-left: -6px;
+  background: var(--rk-mint);
+  color: var(--rk-ink);
+  font-weight: 600;
+}
+.snip-cancel {
+  left: 50%;
+  margin-left: 6px;
+  background: var(--rk-shell);
+  color: var(--rk-paper);
+}
