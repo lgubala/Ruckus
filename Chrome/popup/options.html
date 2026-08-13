@@ -10,7 +10,14 @@
 <style>
   /* Settings opens as a full page, so let it breathe rather than sit in a
      300px column. Everything else is shared with the popup. */
-  body { width: auto; max-width: 640px; margin: 0 auto; }
+  body {
+    width: auto;
+    max-width: 640px;
+    margin: 0 auto;
+    /* This is a page, not a popup: no height cap, no inner scrollbar. */
+    max-height: none;
+    overflow-y: visible;
+  }
   .device { border: none; padding: 18px; gap: 16px; }
   .tabs { position: sticky; top: 0; z-index: 2; }
 </style>

@@ -206,7 +206,7 @@
 
 /* ---------- small screens ---------- */
 
-@media (max-width: 560px) {
+@media (pointer: coarse) {
   .hero { padding: 18px; gap: 16px; border-radius: 20px; }
   .hero-art { width: 116px; height: 116px; }
   #stage { width: 102px; height: 102px; }

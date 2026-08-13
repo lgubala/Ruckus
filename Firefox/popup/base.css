@@ -213,8 +213,8 @@ textarea:focus { border-color: var(--mint-dim); }
 /* On Android the popup opens as a full page, so a fixed 300px column renders
    as an unreadable strip in the corner. Fill the width and size up the type. */
 
-@media (max-width: 560px) {
-  /* Android opens this as a full page, so no cap and no inner scroller. */
+@media (pointer: coarse) {
+  /* Touch: opens as a full page, so no width cap and no inner scroller. */
   body { width: 100%; font-size: 15px; max-height: none; overflow-y: visible; }
 
   .device { padding: 14px; gap: 14px; border-width: 2px; }

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.1
+
+- **Fixed the popup flickering between two layouts.** The mobile styles were
+  behind `@media (max-width: 560px)`, but a desktop popup is only 300px wide, so
+  the query matched there too. The larger mobile layout made the popup wider,
+  which unmatched the query, which made it narrow again. They now key off
+  `pointer: coarse`, which is true on a phone and false on a desktop whatever
+  the width.
+
 ## 1.3.0
 
 - **Fixed a crash that broke almost everything.** `panel` was used but never

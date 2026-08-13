@@ -173,7 +173,7 @@
 .card .chip.primary:hover { background: #8bf7c8; }
 
 
-@media (max-width: 560px) {
+@media (pointer: coarse) {
   .card { padding: 13px 14px 14px; }
   .card-title { font-size: 12px; }
   .note { font-size: 13px; }
