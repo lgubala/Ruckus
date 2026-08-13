@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.3.0
+
+- **Fixed a crash that broke almost everything.** `panel` was used but never
+  declared, so `boot()` threw partway and the message listener inside it never
+  registered. That single line explains the dead context menu, Ruckus not
+  reappearing when re-enabled, and the missing debug handle. The failure was
+  swallowed by a try/catch, which is why nothing appeared in the console.
+- **Popup scrolls.** Firefox caps a popup near 600px; the Toolkit tab is taller
+  than that, so it was clipped with no way to reach the rest.
+- **Settings page added.** Android has no toolbar popup, so Settings &rarr;
+  Add-ons &rarr; Ruckus &rarr; Settings was a dead end. It now opens the full
+  interface, reusing the popup rather than duplicating it.
+- **The long-press menu fits the screen.** It was anchored to the pet and ran
+  off the bottom of a phone; it now centres and scrolls when it cannot fit.
+- **Dragging Ruckus somewhere keeps him there** for 20 seconds instead of
+  walking straight back to the floor.
+- **Mischief intensity slider** &mdash; Quiet, Mild, Normal, Absolute ham. It
+  scales both how often he misbehaves and the gap between pranks; Quiet stops
+  it entirely.
+- Brand in the popup still said PET PIXEL; removed a duplicate menu entry
+
 ## 1.2.0
 
 - **Character card in the page.** On Android the toolbar popup is three taps

@@ -101,7 +101,7 @@
   var bootError = null;
 
   var host, shadow, layer, pet, finder, mischief, tools, jar,
-      particles, sound, chatter, brain, activity;
+      particles, sound, chatter, brain, activity, effects, panel;
   var view = null;
   var awarded = Object.create(null);
   var lastAward = 0;
@@ -379,6 +379,10 @@
       if (!pet.visible) {
         pet.show();
         if (next.pos) pet.placeAt(next.pos.xr, next.pos.yr);
+        // Turning him back on used to require a page reload because nothing
+        // restarted the things that were stood down when he was hidden.
+        if (activity) pet.setActivity(activity.kind(), activity.anchor());
+        if (jar) jar.setVisible(next.settings.showJar !== false);
       }
       pet.setSulking(next.sulkMinutes > 0);
       if (panel) panel.refresh();
@@ -958,8 +962,22 @@
     menuEl.classList.add('open');
     var w = menuEl.offsetWidth || 160;
     var h = menuEl.offsetHeight || 200;
+    var vh = window.innerHeight;
+
+    // The menu is taller than a phone screen, so anchoring it to the pet ran
+    // it off the bottom with no way to reach the rest. Centre it and let it
+    // scroll when it cannot fit.
+    if (h > vh - 24) {
+      menuEl.style.top = '12px';
+      menuEl.style.maxHeight = (vh - 24) + 'px';
+    } else {
+      menuEl.style.maxHeight = '';
+      var top = y - h - 10;
+      if (top < 8) top = y + 70;
+      if (top + h > vh - 8) top = Math.max(8, vh - h - 8);
+      menuEl.style.top = top + 'px';
+    }
     menuEl.style.left = Math.max(8, Math.min(x - w / 2, window.innerWidth - w - 8)) + 'px';
-    menuEl.style.top = (y - h - 10 < 8 ? y + 70 : y - h - 10) + 'px';
     var first = menuEl.querySelector('button:not([disabled])');
     if (first) first.focus({ preventScroll: true });
   }

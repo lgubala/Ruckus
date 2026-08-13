@@ -32,6 +32,11 @@
 body {
   width: 300px;
   max-width: 100%;
+  /* Firefox caps a popup near 600px. Without an explicit scroll container the
+     toolkit tab was clipped at the bottom and looked broken. */
+  max-height: 580px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--ink);
   font-family: var(--mono);
   color: var(--paper);
@@ -209,7 +214,8 @@ textarea:focus { border-color: var(--mint-dim); }
    as an unreadable strip in the corner. Fill the width and size up the type. */
 
 @media (max-width: 560px) {
-  body { width: 100%; font-size: 15px; }
+  /* Android opens this as a full page, so no cap and no inner scroller. */
+  body { width: 100%; font-size: 15px; max-height: none; overflow-y: visible; }
 
   .device { padding: 14px; gap: 14px; border-width: 2px; }
 

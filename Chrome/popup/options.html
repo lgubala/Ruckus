@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruckus settings</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="pet.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  /* Settings opens as a full page, so let it breathe rather than sit in a
+     300px column. Everything else is shared with the popup. */
+  body { width: auto; max-width: 640px; margin: 0 auto; }
+  .device { border: none; padding: 18px; gap: 16px; }
+  .tabs { position: sticky; top: 0; z-index: 2; }
+</style>
+</head>
+<body>
+<div class="device" id="mount"></div>
+<script src="../core/sprites.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

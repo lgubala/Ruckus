@@ -16,12 +16,21 @@
       return ctx.pet.playOnce(kind, kind === 'yawn' ? 1800 : 1300);
     } });
 
+  // 0 quiet, 1 mild, 2 normal, 3 absolute ham. Set in the popup.
+  var INTENSITY = [0, 0.35, 1, 2.6];
+
   RKRegistry.quirk({ id: 'mischief', cooldown: 4000,
     weight: function (ctx) {
+      var st = ctx.view.settings || {};
+      var mult = INTENSITY[st.mischiefLevel == null ? 2 : st.mischiefLevel] || 0;
+      if (!mult) return 0;
       var shy = ctx.needs.confidence < 25;
-      return (shy ? 6 : 18) + ctx.needs.mischiefUrge * (shy ? 0.25 : 0.9);
+      return ((shy ? 6 : 18) + ctx.needs.mischiefUrge * (shy ? 0.25 : 0.9)) * mult;
     },
-    when: function (ctx) { return (ctx.view.settings || {}).mischief !== false; },
+    when: function (ctx) {
+      var st = ctx.view.settings || {};
+      return st.mischief !== false && (st.mischiefLevel == null || st.mischiefLevel > 0);
+    },
     run: function (ctx) { return ctx.doMischief(); } });
 
   RKRegistry.quirk({ id: 'inspect', cooldown: 8000,

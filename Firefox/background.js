@@ -78,6 +78,7 @@ function defaultState() {
       hijackCtrlF: false,
       reduceMotion: false,
       mischief: true,
+      mischiefLevel: 2,   // 0 quiet, 1 mild, 2 normal, 3 ham
       showJar: true,
       clipboardHistory: true,
       sound: true,
@@ -658,7 +659,6 @@ var MENU = [
   ['rk-quote', 'Copy selection as quote', ['selection']],
   ['rk-stash', 'Bury this for later', ['page', 'selection']],
   ['rk-burrow', 'Open the burrow', ['page', 'selection', 'image']],
-  ['rk-feed', 'Feed the pet', ['page']],
   ['rk-pomodoro', 'Start a pomodoro', ['page']],
   ['rk-call', 'Come here', ['page', 'selection', 'image']],
   ['rk-off-site', 'Turn off on this site', ['page', 'selection', 'image']],

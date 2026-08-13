@@ -45,6 +45,8 @@
     timerRead: document.getElementById('timerRead'),
     timerBtn: document.getElementById('timerBtn'),
     openTools: document.getElementById('openTools'),
+    chaos: document.getElementById('chaos'),
+    chaosValue: document.getElementById('chaosValue'),
     offSite: document.getElementById('offSite'),
     offAll: document.getElementById('offAll'),
     forgetClips: document.getElementById('forgetClips'),
@@ -218,6 +220,9 @@
     el.treats.textContent = v.treats;
 
     renderQuickOff(v);
+    var lvl = v.settings.mischiefLevel == null ? 2 : v.settings.mischiefLevel;
+    if (document.activeElement !== el.chaos) el.chaos.value = String(lvl);
+    el.chaosValue.textContent = CHAOS_NAMES[lvl] || 'Normal';
     renderLooks(v);
     renderStash(v.stash || []);
 
@@ -397,6 +402,8 @@
     catch (_) { return ''; }
   }
 
+  var CHAOS_NAMES = ['Quiet', 'Mild', 'Normal', 'Absolute ham'];
+
   function renderQuickOff(v) {
     var off = v.settings.enabled === false;
     el.offAll.setAttribute('aria-pressed', String(off));
@@ -412,6 +419,13 @@
       el.offSite.title = host ? host : 'No ordinary page in front';
     });
   }
+
+  el.chaos.addEventListener('input', function () {
+    el.chaosValue.textContent = CHAOS_NAMES[Number(el.chaos.value)] || 'Normal';
+  });
+  el.chaos.addEventListener('change', function () {
+    pushSettings({ mischiefLevel: Number(el.chaos.value) });
+  });
 
   el.offAll.addEventListener('click', function () {
     pushSettings({ enabled: !(view && view.settings.enabled === false) ? false : true });

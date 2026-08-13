@@ -141,7 +141,11 @@
     function act(force) {
       if (!o.enabled() || busy) return false;
       if (held.length >= MAX_HELD) { returnAll(); return false; }
-      if (!force && Date.now() - lastAct < (T.mischiefCooldown || 20000)) return false;
+      // Higher intensity also means less waiting between pranks.
+      var GAP = [Infinity, 3, 1, 0.4];
+      var lvl = (o.level && o.level()) == null ? 2 : o.level();
+      var gap = (T.mischiefCooldown || 20000) * (GAP[lvl] == null ? 1 : GAP[lvl]);
+      if (!force && Date.now() - lastAct < gap) return false;
 
       var pool = eligible(false);
       // Shuffle so a trick that cannot find a target does not block the rest.

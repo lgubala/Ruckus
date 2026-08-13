@@ -12,7 +12,7 @@
 <div class="device">
 
   <header class="topbar">
-    <span class="brand">PET&nbsp;PIXEL</span>
+    <span class="brand">RUCKUS</span>
     <button class="chip" id="helpToggle" aria-expanded="false">Help</button>
   </header>
 
@@ -105,6 +105,16 @@
       <div class="hero-colours">
         <span class="hero-colours-label">Colour</span>
         <div class="swatches" id="swatches"></div>
+      </div>
+
+      <div class="hero-chaos">
+        <div class="chaos-head">
+          <span class="chaos-label">Mischief</span>
+          <span class="chaos-value" id="chaosValue">Normal</span>
+        </div>
+        <input type="range" id="chaos" min="0" max="3" step="1" value="2"
+               aria-label="Mischief intensity">
+        <div class="chaos-ticks"><span>Quiet</span><span>Mild</span><span>Normal</span><span>Ham</span></div>
       </div>
 
       <div class="hero-off">

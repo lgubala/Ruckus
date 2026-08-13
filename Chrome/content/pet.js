@@ -242,6 +242,8 @@
     function think() {
       var st = self.state;
       if (!st || self.sulking || self.mode !== 'roam') return;
+      // Stay where you were put, for a while.
+      if (self.placedUntil && Date.now() < self.placedUntil) return;
       if (self.activity && self.activity !== 'idle') return;
       self.asleep = !!st.asleep;
 
@@ -723,7 +725,8 @@
           if (Math.abs(dx) > 2) self.facing = dx > 0 ? 1 : -1;
           if (self.mode === 'roam') setAnim(airborne ? 'happy' : 'walk');
         }
-      } else if (self.mode === 'roam' && !self.target) {
+      } else if (self.mode === 'roam' && !self.target &&
+                 !(self.placedUntil && now < self.placedUntil)) {
         // Keep it inside the window if the viewport changed under us.
         var maxY = window.innerHeight - self.size - 4;
         var maxX = window.innerWidth - self.size - 4;
@@ -845,11 +848,14 @@
       down = null;
 
       if (wasDragged) {
+        // Put him down where he was dropped and leave him there. He used to
+        // fall straight back to the floor, which made it impossible to move
+        // him somewhere useful — like up the page to reach his menu.
         self.mode = 'roam';
-        moveTo(self.x, floorY(), { speed: 700, onArrive: function () {
-          setAnim('idle');
-          spark('*', 2);
-        }});
+        self.target = null;
+        self.placedUntil = Date.now() + 20000;
+        setAnim('idle');
+        spark('*', 2);
         return;
       }
       if (handled) return;   // long press already did something
